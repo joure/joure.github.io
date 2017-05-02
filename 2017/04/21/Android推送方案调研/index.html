@@ -87,46 +87,28 @@
 
 
 
-<meta name="description" content="原理划分
-厂商
-特征
-优点
-缺点
-开发成本
-
-
-
-
-系统级">
+<meta name="description" content="本文写于2017年5月2日，随着技术演进可能有不准确的情况，欢迎指正。
+#现状鉴于国内Android开发的生态环境，国产 ROM 无法使用 GCM 推送，就催生了很多推送方案来替代GCM，目前的推送方案按照推送通道可以见到划分为三种：  
+系统级推送
+特征：系统级长连接，实现方式类似于IOS 平台 APNS。
+厂商：有能力控制上游ROM的厂商，在系统中内置自己的推送服务通道，如 Google GC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android推送方案调研">
+<meta property="og:title" content="hwren' Notes">
 <meta property="og:url" content="http://yoursite.com/2017/04/21/Android推送方案调研/index.html">
 <meta property="og:site_name" content="hwren' Notes">
-<meta property="og:description" content="原理划分
-厂商
-特征
-优点
-缺点
-开发成本
-
-
-
-
-系统级">
-<meta property="og:updated_time" content="2017-04-26T07:55:19.000Z">
+<meta property="og:description" content="本文写于2017年5月2日，随着技术演进可能有不准确的情况，欢迎指正。
+#现状鉴于国内Android开发的生态环境，国产 ROM 无法使用 GCM 推送，就催生了很多推送方案来替代GCM，目前的推送方案按照推送通道可以见到划分为三种：  
+系统级推送
+特征：系统级长连接，实现方式类似于IOS 平台 APNS。
+厂商：有能力控制上游ROM的厂商，在系统中内置自己的推送服务通道，如 Google GC">
+<meta property="og:updated_time" content="2017-05-02T10:01:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android推送方案调研">
-<meta name="twitter:description" content="原理划分
-厂商
-特征
-优点
-缺点
-开发成本
-
-
-
-
-系统级">
+<meta name="twitter:title" content="hwren' Notes">
+<meta name="twitter:description" content="本文写于2017年5月2日，随着技术演进可能有不准确的情况，欢迎指正。
+#现状鉴于国内Android开发的生态环境，国产 ROM 无法使用 GCM 推送，就催生了很多推送方案来替代GCM，目前的推送方案按照推送通道可以见到划分为三种：  
+系统级推送
+特征：系统级长连接，实现方式类似于IOS 平台 APNS。
+厂商：有能力控制上游ROM的厂商，在系统中内置自己的推送服务通道，如 Google GC">
 
 
 
@@ -160,7 +142,7 @@
 
 
 
-  <title> Android推送方案调研 | hwren' Notes </title>
+  <title>  | hwren' Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -330,7 +312,7 @@
             
             
               
-                Android推送方案调研
+                
               
             
           </h1>
@@ -373,7 +355,7 @@
 
           
           
-             <span id="/2017/04/21/Android推送方案调研/" class="leancloud_visitors" data-flag-title="Android推送方案调研">
+             <span id="/2017/04/21/Android推送方案调研/" class="leancloud_visitors" data-flag-title="">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,23 +384,156 @@
       
 
       
-        <table>
+        <p>本文写于2017年5月2日，随着技术演进可能有不准确的情况，欢迎指正。</p>
+<p>#现状<br>鉴于国内Android开发的生态环境，国产 ROM 无法使用 GCM 推送，就催生了很多推送方案来替代GCM，目前的推送方案按照推送通道可以见到划分为三种：  </p>
+<h5 id="系统级推送"><a href="#系统级推送" class="headerlink" title="系统级推送"></a>系统级推送</h5><ul>
+<li>特征：系统级长连接，实现方式类似于IOS 平台 APNS。</li>
+<li>厂商：有能力控制上游ROM的厂商，在系统中内置自己的推送服务通道，如 Google GCM、小米推送、华为推送 等</li>
+<li>优点：使用系统服务，省电，可靠，成功率高，app被完全杀死后仍能收到推送。</li>
+<li>缺点：Android 平台碎片化问题，各家的服务通道不能通用，GCM 只能在有完整Google 服务框架的手机上使用，其他类似。</li>
+</ul>
+<h5 id="三方推送"><a href="#三方推送" class="headerlink" title="三方推送"></a>三方推送</h5><ul>
+<li>特征：app级长连接通道。标配：由系统事件广播保活进程。pro：独立进程，共用长连接，链式唤醒等。</li>
+<li>厂商：提供推送及增值服务，如友盟推送、个推、腾讯信鸽、百度云推送等</li>
+<li>优点：通用性较强，各种ROM上都能用，app在活动时成功率与系统级推送相当。</li>
+<li>缺点：app被杀死后成功率较低，这点在国产ROM上尤为明显。进程保活、链式唤醒会导致耗电量增加。进程保活和唤醒机制受限于系统及各种优化软件。</li>
+</ul>
+<h5 id="混合推送"><a href="#混合推送" class="headerlink" title="混合推送"></a>混合推送</h5><ul>
+<li>特征：同时包含系统级长连接通道和 app 级长连接通道</li>
+<li>厂商：小米推送，阿里云推送，LeanCloud Push，极光推送等。</li>
+<li>优点：适应性比纯系统级推送强，成功率相对纯三方推送较高</li>
+<li>缺点：除小米推送外，其他推送方式都是以胶水的方式捆绑了系统级推送和自家三方推送（类似于友盟分享），开发成本相对稍高。</li>
+</ul>
+<p>三方推送采用的进程保活以及链式唤醒技术，流不流氓暂且不表，但一直是国内 ROM 厂商和系统优化软件严打的对象。<br>三方推送厂商所谓的 “需要把应用加到【自启动管理】列表”等设置， 站在用户的角度显然是不现实的。<br>随着 Android 系统版本迭代过程中对系统权限控制的收紧，以及ROM厂商的省电策略，单一的三方推送成功率只能用惨不忍睹来形容。<br>为了提高成功率，使用多通道推送是一种必要却又无奈的做法。</p>
+<p>#推送效果简单对比<br>首先要了解一些推送的基本条件。</p>
+<h6 id="通知与透传消息"><a href="#通知与透传消息" class="headerlink" title="通知与透传消息"></a>通知与透传消息</h6><ul>
+<li>在系统级推送中，通知交给相应的PushSDK处理，透传由我们自己App处理。</li>
+<li>透传消息可以自定义消息内容，拥有更大的灵活度；通知消息格式较为死板固定。</li>
+<li>根本区别在于通知消息走的是系统公用通道，透传消息走的是app私有通道；<em>对于小米推送、华为推送来说，只有采用通知消息，到达率才有保证，透传消息，与三方推送并没有什么区别。</em></li>
+<li>在三方推送中，其提供的通知和透传消息走的都是app级通道。</li>
+</ul>
+<h6 id="app-运行状态"><a href="#app-运行状态" class="headerlink" title="app 运行状态"></a>app 运行状态</h6><ul>
+<li>app 运行时在网络正常的情况下，各家推送服务送达效果相当，只是延迟有差异</li>
+<li>app 被杀死后，系统级推送在对应平台有着天然的优势，但仅限于通知类型的消息。透传消息与三方推送的结果类似，在国产ROM上直接“阵亡”了。</li>
+</ul>
+<p>######下面主要对比App被杀死后发推送的测试结果：<br>测试机型：</p>
+<ul>
+<li>Nexus5 Android 6.0.1 </li>
+<li>一加3T  刷MIUI v8 （基于Android 6.0.1）</li>
+<li>小米note MIUI v7 （基于Android 4.4）</li>
+<li>华为 Mate9 EMUI5.0  (基于Android 7.0)</li>
+<li>华为 Mate7 （基于Android 4.4）</li>
+</ul>
+<p>√ 收到  x不能收到  - 未测试</p>
+<p>######通知消息：</p>
+<table>
 <thead>
 <tr>
-<th>原理划分</th>
-<th>厂商</th>
-<th>特征</th>
-<th>优点</th>
-<th>缺点</th>
-<th>开发成本</th>
+<th style="text-align:center">推送方式</th>
+<th style="text-align:center">原生Android</th>
+<th style="text-align:center">MIUI v8</th>
+<th style="text-align:center">MIUI v7</th>
+<th style="text-align:center">EMUI 5.0</th>
+<th style="text-align:center">EMUI 3.0</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>系统级</td>
+<td style="text-align:center">Google GCM</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+</tr>
+<tr>
+<td style="text-align:center">小米推送</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">华为推送</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">x</td>
+</tr>
+<tr>
+<td style="text-align:center">LeanCloud Push</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">-</td>
 </tr>
 </tbody>
 </table>
+<h6 id="透传消息："><a href="#透传消息：" class="headerlink" title="透传消息："></a>透传消息：</h6><table>
+<thead>
+<tr>
+<th style="text-align:center">推送方式</th>
+<th style="text-align:center">原生Android</th>
+<th style="text-align:center">MIUI v8</th>
+<th style="text-align:center">MIUI v7</th>
+<th style="text-align:center">EMUI 5.0</th>
+<th style="text-align:center">EMUI 3.0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Google GCM</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+</tr>
+<tr>
+<td style="text-align:center">小米推送</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">华为推送</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+</tr>
+<tr>
+<td style="text-align:center">LeanCloud Push</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>华为推送<br>app被杀死后在EMUI 5.0 系统下仍能收到通知消息，透传消息接收失败<br>仅支持 EMUI 5.0以上版本，低版本和其他ROM 创建连接失败，完全不能使用。</p>
+</li>
+<li><p>小米推送<br>app被杀死后在MIUI系统下仍能收到通知消息，透传消息接收失败<br>非MIUI系统下，小米推送可以使用app级通道，此时与三方推送类似</p>
+<p>相对而言，小米推送的完成度更高，在系统推送的基础上实现了三方通道，兼容了非 MIUI 的 Android 机，而且有 IOS 平台的SDK，在一定程度上可以替代三方推送。华为推送仅支持自家EMUI 5.0以上系统。</p>
+</li>
+</ul>
+<p>###结论：</p>
+<ul>
+<li>如果是从零开开始开发，只接入小米推送，就可以覆盖到大部分 Android 机型，并且可以在 MIUI 上获得加成。</li>
+<li>如果追求高送达率，可以采用目前已知的“捆绑”混合推送方案例如：阿里云推送，极光推送等。</li>
+<li>如果项目中已经接入了三方推送而效果又不理想，可以考虑单独接入小米、华为等平台的 SDK 来提高在国产 ROM 上的送达率，需要自行处理数据整合的问题。</li>
+</ul>
+<p>######混合推送参考文档</p>
+<p><a href="https://help.aliyun.com/document_detail/30067.html" target="_blank" rel="external">阿里云推送 </a>   <a href="https://help.aliyun.com/document_detail/35315.html" target="_blank" rel="external">费用参考</a>   :目前支持小米和华为<br><a href="https://leancloud.cn/docs/android_push_guide.html#%E6%B7%B7%E5%90%88%E6%8E%A8%E9%80%81" target="_blank" rel="external">LeanCloudPush</a>  <a href="https://leancloud.cn/pricing/" target="_blank" rel="external">费用参考</a> :目前支持华为和魅族，暂不支持小米<br><a href="https://docs-test.jiguang.cn/jpush/client/Android/android_mipush_guide/" target="_blank" rel="external">极光推送</a> : 目前支持小米、华为和魅族<br><a href="http://dev.xiaomi.com/doc/p=544/index.html" target="_blank" rel="external">小米推送</a></p>
+<p>关于推送方案，可以参考另外两篇文章：<br><a href="http://www.jianshu.com/p/d650d02a1c7a" target="_blank" rel="external">集成第三方推送最佳实践</a><br><a href="http://zhangtielei.com/posts/blog-android-push.html" target="_blank" rel="external">Android端外推送到底有多烦？</a><br><a href="http://www.jianshu.com/p/22bf27c6a830" target="_blank" rel="external">推送 从入门到放弃</a></p>
 
       
     </div>
@@ -473,7 +588,7 @@
     <div class="post-spread">
       
         <div class="ds-share flat" data-thread-key="2017/04/21/Android推送方案调研/"
-     data-title="Android推送方案调研"
+     data-title=""
      data-content=""
      data-url="http://yoursite.com/2017/04/21/Android推送方案调研/">
   <div class="ds-share-inline">
@@ -503,7 +618,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/04/21/Android推送方案调研/"
-           data-title="Android推送方案调研" data-url="http://yoursite.com/2017/04/21/Android推送方案调研/">
+           data-title="" data-url="http://yoursite.com/2017/04/21/Android推送方案调研/">
       </div>
     
   </div>
@@ -527,8 +642,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://omdiy54c9.bkt.clouddn.com/image/jpg/avatar/The_Dark_Side_of_the_Moon.jpg"
@@ -592,6 +716,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#系统级推送"><span class="nav-number">1.</span> <span class="nav-text">系统级推送</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三方推送"><span class="nav-number">2.</span> <span class="nav-text">三方推送</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#混合推送"><span class="nav-number">3.</span> <span class="nav-text">混合推送</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#通知与透传消息"><span class="nav-number">3.1.</span> <span class="nav-text">通知与透传消息</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#app-运行状态"><span class="nav-number">3.2.</span> <span class="nav-text">app 运行状态</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#透传消息："><span class="nav-number">3.3.</span> <span class="nav-text">透传消息：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
